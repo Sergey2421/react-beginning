@@ -2,3 +2,12 @@
     grid-area: n;
     background-color: red;
 }
+
+.item a{
+    color: wheat;
+    text-decoration: none;
+}
+
+.item a.active {
+    color: dodgerblue;
+}
