@@ -12,7 +12,7 @@ const Nav = () => {
                 <NavLink to={'/news'} className={current => {if (current.isActive) return Css.active}}>News</NavLink>
             </div>
             <div className={Css.item}>
-                <NavLink to={'/messages'} className={current => {if (current.isActive) return Css.active}}>Messages</NavLink>
+                <NavLink to={'/dialogs'} className={current => {if (current.isActive) return Css.active}}>Messages</NavLink>
             </div>
             <div className={Css.item}>
                 <NavLink to={'/settings'} className={current => {if (current.isActive) return Css.active}}>Settings</NavLink>
