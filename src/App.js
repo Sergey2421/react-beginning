@@ -13,9 +13,9 @@ function App(props) {
             <Nav friends={props.states.sideBar}/>
             <div className={'app-wrapper-content'}>
                 <Routes>
-                    <Route path={'/profile'} element={<Main posts={props.states.mainPage}/>}/>
+                    <Route path={'/profile'} element={<Main posts={props.states.mainPage} dispatch={props.dispatch}/>}/>
                     <Route path={`/dialogs/`}
-                           element={<Dialogs dialogs={props.states.dialogsPage} messages={props.states.dialogsPage}/>}/>
+                           element={<Dialogs dialogs={props.states.dialogsPage.dialogs} messages={props.states.dialogsPage.messages} dispatch={props.dispatch}/>}/>
                 </Routes>
             </div>
         </div>

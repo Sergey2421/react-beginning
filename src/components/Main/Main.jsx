@@ -7,7 +7,7 @@ const Main = (props) => {
     return (
         <div>
             <Profile/>
-            <MyPosts posts={props.posts.posts}/>
+            <MyPosts posts={props.posts} dispatch={props.dispatch}/>
         </div>
     )
 }
