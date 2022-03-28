@@ -5,7 +5,7 @@ import Friend from "./Friend/Friend";
 
 const Nav = (props) => {
 
-    let friends = props.friends.friends.map(friend => <Friend src={friend.src} name={friend.name}/>);
+    let friends = props.sideBar.friends.map(friend => <Friend src={friend.src} name={friend.name}/>);
 
     return (
         <nav className={Css.nav}>

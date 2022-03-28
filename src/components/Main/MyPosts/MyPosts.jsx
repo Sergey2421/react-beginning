@@ -1,29 +1,23 @@
 import React from "react";
 import Css from "./MyPosts.module.css"
 import Post from "./Post/Post";
-import {addPostActionCreator, addTextActionCreator} from "../../../redux/state";
 
 const MyPosts = (props) => {
 
-    let postElements = props.posts.posts.map(post => <Post src={post.src} message={post.text} likesCount={post.likesCount}/>);
-
-    let newPostElement = React.createRef();
-
+    let postElements = props.mainPage.posts.map(post => <Post src={post.src} message={post.text} likesCount={post.likesCount}/>);
 
     function click() {
-        let action = addPostActionCreator();
-        props.dispatch(action);
+        props.addPost();
     }
 
-    function onPostChange() {
-        let action = addTextActionCreator(newPostElement.current.value, 'mainPage');
-        props.dispatch(action);
+    function onPostChange(e) {
+        props.addText(e);
     }
     return (
         <div className={Css.postsBlock}>
             <h3>My posts</h3>
             <div>
-                <textarea ref={newPostElement} onChange={onPostChange} value={props.posts.newPostText}/>
+                <textarea onChange={onPostChange} value={props.mainPage.newText}/>
             </div>
             <div>
                 <button onClick={click}>Add post

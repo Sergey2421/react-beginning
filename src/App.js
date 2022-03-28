@@ -3,19 +3,19 @@ import './App.css';
 import Header from "./components/Header/Header";
 import Nav from "./components/Nav/Nav";
 import Main from "./components/Main/Main";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Dialogs from "./components/Dialogs/Dialogs";
+import {Route, Routes} from "react-router-dom";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 function App(props) {
     return (
         <div className='app-wrapper'>
             <Header/>
-            <Nav friends={props.states.sideBar}/>
+            <Nav sideBar={props.store.getState().sideBar}/>
             <div className={'app-wrapper-content'}>
                 <Routes>
-                    <Route path={'/profile'} element={<Main posts={props.states.mainPage} dispatch={props.dispatch}/>}/>
+                    <Route path={'/profile'} element={<Main store={props.store}/>}/>
                     <Route path={`/dialogs/`}
-                           element={<Dialogs dialogs={props.states.dialogsPage.dialogs} messages={props.states.dialogsPage.messages} dispatch={props.dispatch}/>}/>
+                           element={<DialogsContainer store={props.store}/>}/>
                 </Routes>
             </div>
         </div>

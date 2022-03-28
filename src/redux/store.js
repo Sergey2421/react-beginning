@@ -1,6 +1,7 @@
-const ADD_POST = 'ADD-POST';
-const ADD_TEXT = 'ADD-TEXT';
-const ADD_MESSAGE = 'ADD_MESSAGE';
+/*
+import {main_reducer} from "./main_reducer";
+import {dialogs_reducer} from "./dialogs_reducer";
+import {sidebar_reducer} from "./sidebar_reducer";
 
 let store = {
     _state: {
@@ -53,72 +54,12 @@ let store = {
     subscribe(observer) {
         this._callSubscriber = observer;
     },
-    /*addText(text) {
-        this._state.mainPage.newText = text;
-        this._callSubscriber(this);
-    },
-    addPost() {
-        let newPost = {
-            id: 3,
-            text: this._state.mainPage.newText,
-            likesCount: 10,
-        };
-
-        this._state.mainPage.posts.push(newPost);
-        this._state.mainPage.newText = '';
-        this._callSubscriber(this);
-    },*/
     dispatch(action) {
-        switch (action.type) {
-            case ADD_POST: {
-                let newPost = {
-                    id: 3,
-                    text: this._state.mainPage.newText,
-                    likesCount: 10,
-                };
-
-                this._state.mainPage.posts.push(newPost);
-                this._state.mainPage.newText = '';
-                this._callSubscriber(this);
-                break;
-            }
-            case ADD_TEXT: {
-                this._state[action.label].newText = action.text;
-                this._callSubscriber(this);
-                break;
-            }
-            case ADD_MESSAGE: {
-                let newMessage = {
-                    id: 99,
-                    message: this._state.dialogsPage.newText,
-                };
-
-                this._state.dialogsPage.messages.push(newMessage);
-                this._state.dialogsPage.newText = '';
-                this._callSubscriber(this);
-                break;
-            }
-            default:
-                break;
-        }
+        this._state.mainPage = main_reducer(this._state.mainPage, action);
+        this._state.dialogsPage = dialogs_reducer(this._state.dialogsPage, action);
+        this._state.sideBar = sidebar_reducer(this._state.sideBar, action)
+        this._callSubscriber(store)
     },
 }
 
-export const addPostActionCreator = () => ({ type: ADD_POST });
-
-export const addTextActionCreator = (text, label) => {
-    return {
-        type: ADD_TEXT,
-        text: text,
-        label: label,
-    };
-}
-
-export const addMessageActionCreator = (messageText) => {
-    return {
-        type: ADD_MESSAGE,
-        message: messageText,
-    }
-}
-
-export default store;
+export default store;*/
