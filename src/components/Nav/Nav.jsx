@@ -21,6 +21,9 @@ const Nav = (props) => {
             <div className={Css.item}>
                 <NavLink to={'/settings'} className={current => {if (current.isActive) return Css.active}}>Settings</NavLink>
             </div>
+            <div className={Css.item}>
+                <NavLink to={'/users'} className={current => {if (current.isActive) return Css.active}}>Find user</NavLink>
+            </div>
             <div className={Css.container}>
                 <div>
                     <p>Friends</p>

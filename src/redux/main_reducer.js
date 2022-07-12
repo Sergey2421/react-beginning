@@ -1,3 +1,5 @@
+import {cloneDeep} from "lodash";
+
 const ADD_POST = 'ADD_POST';
 const ADD_TEXT = 'ADD_TEXT';
 
@@ -29,13 +31,17 @@ export const main_reducer = (state = initialState, action) => {
                 likesCount: 10,
             };
 
-            state.posts.push(newPost);
-            state.newText = '';
-            return state;
+            return {
+                ...state,
+                posts: [...state.posts, newPost],
+                newText: '',
+            }
         }
         case ADD_TEXT: {
-            state.newText = action.text;
-            return state;
+            return {
+                ...state,
+                newText: action.text,
+            }
         }
         default:
             return state;

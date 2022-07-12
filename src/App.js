@@ -1,21 +1,23 @@
 import React from "react";
 import './App.css';
 import Header from "./components/Header/Header";
-import Nav from "./components/Nav/Nav";
 import Main from "./components/Main/Main";
 import {Route, Routes} from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import {NavContainer} from "./components/Nav/NavContainer";
+import UsersContainer from "./components/Users/UsersContainer";
 
 function App(props) {
     return (
         <div className='app-wrapper'>
             <Header/>
-            <Nav sideBar={props.store.getState().sideBar}/>
+            <NavContainer />
             <div className={'app-wrapper-content'}>
                 <Routes>
-                    <Route path={'/profile'} element={<Main store={props.store}/>}/>
+                    <Route path={'/profile'} element={<Main/>}/>
                     <Route path={`/dialogs/`}
-                           element={<DialogsContainer store={props.store}/>}/>
+                           element={<DialogsContainer/>}/>
+                    <Route path={'/users'} element={<UsersContainer/>}/>
                 </Routes>
             </div>
         </div>

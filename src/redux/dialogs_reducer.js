@@ -1,3 +1,5 @@
+import {cloneDeep} from "lodash";
+
 const ADD_MESSAGE = 'ADD_MESSAGE';
 const ADD_TEXT_MESSAGE = 'ADD_TEXT_MESSAGE';
 
@@ -23,8 +25,10 @@ export const dialogs_reducer = (state = initialState, action) => {
 
     switch (action.type) {
         case ADD_TEXT_MESSAGE: {
-            state.newText = action.text;
-            return state;
+            return {
+                ...state,
+                newText: action.text,
+            }
         }
         case ADD_MESSAGE: {
             let newMessage = {
@@ -32,9 +36,11 @@ export const dialogs_reducer = (state = initialState, action) => {
                 message: state.newText,
             };
 
-            state.messages.push(newMessage);
-            state.newText = '';
-            return state;
+            return {
+                ...state,
+                messages: [...state.messages, newMessage],
+                newText: '',
+            }
         }
         default:
             return state;

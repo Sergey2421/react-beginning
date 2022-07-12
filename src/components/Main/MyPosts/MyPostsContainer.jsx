@@ -1,19 +1,25 @@
 import React from "react";
 import {addPostActionCreator, addTextActionCreator} from "../../../redux/main_reducer";
 import MyPosts from "./MyPosts";
+import {connect} from "react-redux";
 
-const MyPostsContainer = (props) => {
-
-    function click() {
-        let action = addPostActionCreator();
-        props.store.dispatch(action);
+let mapStateToProps = (state) => {
+    return {
+        mainPage: state.mainPage,
     }
-
-    function onPostChange(e) {
-        let action = addTextActionCreator(e.target.value);
-        props.store.dispatch(action);
-    }
-    return <MyPosts addText={onPostChange} addPost={click} mainPage={props.store.getState().mainPage}/>
 }
+
+let mapDispatchToProps = (dispatch) => {
+    return {
+        addText: (e) => {
+            dispatch(addTextActionCreator(e.target.value));
+        },
+        addPost: () => {
+            dispatch(addPostActionCreator());
+        }
+    }
+}
+
+const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
 
 export default MyPostsContainer;
