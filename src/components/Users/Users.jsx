@@ -1,55 +1,59 @@
-import React from "react";
 import Css from "./Users.module.css"
+import userPhoto from "../../assets/images/user-png.jpg";
+import React from "react";
+import {NavLink} from "react-router-dom";
+import axios from "axios";
 
 const Users = (props) => {
 
-    if (props.usersPage.users.length == 0) {
-        props.setUsers({
-                id: 1,
-                photoUrl: 'https://cdn-icons-png.flaticon.com/512/147/147142.png',
-                followed: true,
-                fullName: 'Sergey',
-                status: 'I am a programmer',
-                location: {
-                    city: 'Minsk',
-                    country: 'Belarus',
-                },
-            },
-            {
-                id: 2,
-                photoUrl: 'https://cdn-icons-png.flaticon.com/512/147/147142.png',
-                followed: false,
-                fullName: 'Egor',
-                status: 'I am a engineer',
-                location: {
-                    city: 'Gomel',
-                    country: 'Belarus',
-                },
-            });
+    let pagesCount = Math.ceil(props.totalCount / props.pageSize);
+
+    let pages = [];
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i);
     }
 
-    return (
+    return <div>
         <div>
-            Users will be here
-            {
-                props.usersPage.users.map(e =>
-                    <div key={e.id}>
+            {pages.map(elem => <span onClick={(e) => { props.onPageChanged(elem) }} className={props.currentPage === elem && Css.selectedPage}>{elem}</span>)}
+        </div>
+        {
+            props.users.map(e =>
+                <div key={e.id}>
                         <span>
                             <div>
-                                <img className={Css.photo} src={e.photoUrl}/>
+                                <NavLink to={`/profile/${e.id}`}>
+                                    <img className={Css.photo} src={e.photos.small ? e.photos.small : userPhoto}/>
+                                </NavLink>
                             </div>
                             <div>
                                 {
                                     e.followed
-                                        ? <button onClick={() => props.unfollow(e.id)}>Unfollow</button>
-                                        : <button onClick={() => props.follow(e.id)}>Follow</button>
+                                        ? <button onClick={() => {
+                                            axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${e.id}`, {
+                                                withCredentials: true,
+                                            }).then(response => {
+                                                if (response.data.resultCode == 0) {
+                                                    props.unfollow(e.id)
+                                                }
+                                            });
+                                        }}>Unfollow</button>
+                                        : <button onClick={() => {
+                                            axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${e.id}`, {},{
+                                                withCredentials: true,
+                                            }).then(response => {
+                                                if (response.data.resultCode == 0) {
+                                                    props.follow(e.id)
+                                                }
+                                            });
+                                        }}>Follow</button>
                                 }
                             </div>
                         </span>
-                        <span>
+                    <span>
                             <span>
                                 <div>
-                                    {e.fullName}
+                                    {e.name}
                                 </div>
                                 <div>
                                     {e.status}
@@ -57,17 +61,16 @@ const Users = (props) => {
                             </span>
                             <span>
                                 <div>
-                                    {e.location.country}
+                                    {"e.location.country"}
                                 </div>
                                 <div>
-                                    {e.location.city}
+                                    {"e.location.city"}
                                 </div>
                             </span>
                         </span>
-                    </div>)
-            }
-        </div>
-    )
+                </div>)
+        }
+    </div>
 }
 
 export default Users;

@@ -2,8 +2,10 @@ import {cloneDeep} from "lodash";
 
 const ADD_POST = 'ADD_POST';
 const ADD_TEXT = 'ADD_TEXT';
+const SET_USER_PROFILE = 'SET_USER_PROFILE';
 
 let initialState = {
+    profile: null,
     posts: [
         {
             id: 1,
@@ -43,6 +45,12 @@ export const main_reducer = (state = initialState, action) => {
                 newText: action.text,
             }
         }
+        case SET_USER_PROFILE: {
+            return {
+                ...state,
+                profile: {...action.profile},
+            }
+        }
         default:
             return state;
     }
@@ -56,3 +64,5 @@ export const addTextActionCreator = (text) => {
         text: text,
     };
 }
+
+export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
