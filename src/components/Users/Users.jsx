@@ -13,6 +13,16 @@ const Users = (props) => {
         pages.push(i);
     }
 
+    let toggleFollow = (callback, e) => {
+        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${e.id}`, {
+            withCredentials: true,
+        }).then(response => {
+            if (response.data.resultCode == 0) {
+                props[callback](e.id)
+            }
+        });
+    }
+
     return <div>
         <div>
             {pages.map(elem => <span onClick={(e) => { props.onPageChanged(elem) }} className={props.currentPage === elem && Css.selectedPage}>{elem}</span>)}
@@ -29,24 +39,8 @@ const Users = (props) => {
                             <div>
                                 {
                                     e.followed
-                                        ? <button onClick={() => {
-                                            axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${e.id}`, {
-                                                withCredentials: true,
-                                            }).then(response => {
-                                                if (response.data.resultCode == 0) {
-                                                    props.unfollow(e.id)
-                                                }
-                                            });
-                                        }}>Unfollow</button>
-                                        : <button onClick={() => {
-                                            axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${e.id}`, {},{
-                                                withCredentials: true,
-                                            }).then(response => {
-                                                if (response.data.resultCode == 0) {
-                                                    props.follow(e.id)
-                                                }
-                                            });
-                                        }}>Follow</button>
+                                        ? <button onClick={() => toggleFollow('unfollow', e)}>Unfollow</button>
+                                        : <button onClick={() => toggleFollow('follow', e)}>Follow</button>
                                 }
                             </div>
                         </span>
